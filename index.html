@@ -8,6 +8,7 @@
     <title>My DEX</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
         integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="./style.css">
 </head>
 
@@ -34,18 +35,20 @@
             <h4>Swap</h4>
             <div id="form">
                 <div class="swapbox py-4">
-                    <div class="swapbox-select" id="from-token-select">Token Select</div>
+                    <div class="swapbox-select" id="from-token-select">Token Select <i class="bi bi-chevron-down"></i>
+                    </div>
                     <div class="swapbox-select">
                         <input class="number form-control" placeholder="Amount" id="from-amount">
                     </div>
                 </div>
                 <div class="swapbox py-4">
-                    <div class="swapbox-select" id="to-token-select">Token Select</div>
+                    <div class="swapbox-select" id="to-token-select">Token Select <i class="bi bi-chevron-down"></i>
+                    </div>
                     <div class="swapbox-select">
                         <input class="number form-control" placeholder="Amount" id="from-amount">
                     </div>
                 </div>
-                <button class="btn btn-large btn-primary btn-blocl" id="swap-button">Swap</button>
+                <button class="btn btn-large btn-primary btn-block" id="swap-button">Swap</button>
             </div>
         </div>
     </div>

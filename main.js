@@ -1,6 +1,13 @@
 Moralis.initialize("8mhQ8vxPNUaWL5v44ygPoWn0ovTJ1muKCGzL0XtB");
 Moralis.serverURL = "https://vojnqi99exj1.usemoralis.com:2053/server";
 
+async function init() {
+  const tokens = await Moralis.Plugins.oneInch.getSupportedTokens({
+    chain: "bsc",
+  });
+  console.log(tokens);
+}
+
 async function login() {
   try {
     currentUser = Moralis.User.current();
