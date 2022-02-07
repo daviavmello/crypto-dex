@@ -32,3 +32,12 @@ body {
   padding: 24px;
   border-radius: 24px;
 }
+
+.modal-body {
+  overflow: scroll;
+  height: 60vh;
+}
+
+.token-list-img {
+  width: 40px;
+}
