@@ -1,5 +1,5 @@
 Moralis.initialize("8mhQ8vxPNUaWL5v44ygPoWn0ovTJ1muKCGzL0XtB");
-Moralis.serverURL("https://vojnqi99exj1.usemoralis.com:2053/server");
+Moralis.serverURL = "https://vojnqi99exj1.usemoralis.com:2053/server";
 
 async function login() {
   try {
@@ -11,5 +11,16 @@ async function login() {
     console.log(error);
   }
 }
+
+const openModal = () => {
+  document.getElementById("token-modal").style.display = "initial";
+};
+
+const closeModal = () => {
+  document.getElementById("token-modal").style.display = "none";
+};
+
+document.getElementById("from-token-select").onclick = openModal;
+document.getElementById("modal-close").onclick = closeModal;
 
 document.getElementById("login_button").onclick = login;
