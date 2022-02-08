@@ -27,27 +27,40 @@ async function listAvailableTokens() {
       <span class="token-list-text">${token.symbol}</span>
     `;
     div.innerHTML = html;
-    div.onclick = (e) => selectToken(e);
+    div.onclick = () => selectToken(address);
     parent.appendChild(div);
   }
 }
 
-function selectToken(e) {
+function selectToken(address) {
   closeModal();
-  let address = e.target.getAttribute("data-address");
+  console.log(address);
+  // let address = e.target.getAttribute("data-address");
   currentTrade[currentSelectSide] = tokens[address];
   renderInterface();
 }
 
 function renderInterface() {
-  if (currentTrade) {
+  if (currentTrade.from) {
+    // From
     document.getElementById("from-token-img").src = currentTrade.from.logoURI;
     document.getElementById("from-token-text").innerHTML =
       currentTrade.from.symbol;
+    // From styles
     document.getElementById("from-token-placeholder").style.display = "none";
+    document.getElementById("from-token-container").style.display = "block";
     document.getElementById("from-token-container").style.paddingBottom =
       "0.5rem";
-    document.getElementById("from-token-container").style.display = "initial";
+  }
+  if (currentTrade.to) {
+    // To
+    document.getElementById("to-token-img").src = currentTrade.to.logoURI;
+    document.getElementById("to-token-text").innerHTML = currentTrade.to.symbol;
+    // To styles
+    document.getElementById("to-token-placeholder").style.display = "none";
+    document.getElementById("to-token-container").style.display = "block";
+    document.getElementById("to-token-container").style.paddingBottom =
+      "0.5rem";
   }
 }
 
@@ -74,6 +87,6 @@ const closeModal = () => {
 init();
 
 document.getElementById("from-token-select").onclick = () => openModal("from");
+document.getElementById("to-token-select").onclick = () => openModal("to");
 document.getElementById("modal-close").onclick = closeModal;
-
 document.getElementById("login_button").onclick = login;
