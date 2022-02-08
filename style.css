@@ -34,14 +34,40 @@ body {
 }
 
 .token-row {
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 0;
+}
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: 30vw;
+  }
+}
+
+.modal {
+  background-color: rgba(184, 184, 184, 0.75);
+  backdrop-filter: blur(2px);
+  overflow-y: auto;
+}
+
+.modal-content {
+  border: none;
+  background-color: rgba(255, 255, 255, 0.75);
+  border-radius: 24px;
+}
+
+.modal-open {
+  padding-right: 0;
 }
 
 .modal-body {
-  overflow: scroll;
+  overflow: auto;
   height: 60vh;
 }
 
+.modal-footer {
+    border-top: none;
+}
+
 .token-list-img {
-  width: 40px;
+  width: 36px;
 }

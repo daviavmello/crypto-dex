@@ -5,7 +5,7 @@ let currentTrade = {};
 
 async function init() {
   await Moralis.initPlugins();
-  await Moralis.enable();
+  await Moralis.enableWeb3();
   await listAvailableTokens();
 }
 
