@@ -32,10 +32,23 @@ async function listAvailableTokens() {
   }
 }
 
-async function selectToken(e) {
+function selectToken(e) {
   closeModal();
   let address = e.target.getAttribute("data-address");
   currentTrade[currentSelectSide] = tokens[address];
+  renderInterface();
+}
+
+function renderInterface() {
+  if (currentTrade) {
+    document.getElementById("from-token-img").src = currentTrade.from.logoURI;
+    document.getElementById("from-token-text").innerHTML =
+      currentTrade.from.symbol;
+    document.getElementById("from-token-placeholder").style.display = "none";
+    document.getElementById("from-token-container").style.paddingBottom =
+      "0.5rem";
+    document.getElementById("from-token-container").style.display = "initial";
+  }
 }
 
 async function login() {

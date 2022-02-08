@@ -72,11 +72,15 @@ body {
     border-top: none;
 }
 
-.token-list-img {
+.token-list-img, .token-image {
   width: 36px;
 }
 
-.token-list-text {
+.from-token-container {
+  display: none;
+}
+
+.token-list-text, #from-token-text {
   padding-left: 0.5rem;
   font-weight: 500;
 }
