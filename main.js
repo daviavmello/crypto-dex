@@ -2,6 +2,8 @@ Moralis.initialize("8mhQ8vxPNUaWL5v44ygPoWn0ovTJ1muKCGzL0XtB");
 Moralis.serverURL = "https://vojnqi99exj1.usemoralis.com:2053/server";
 
 let currentTrade = {};
+let currentSelectSide;
+let tokens;
 
 async function init() {
   await Moralis.initPlugins();
@@ -13,27 +15,27 @@ async function listAvailableTokens() {
   const result = await Moralis.Plugins.oneInch.getSupportedTokens({
     chain: "eth",
   });
-  const tokens = result.tokens;
+  tokens = result.tokens;
   let parent = document.getElementById("token-list");
   for (const address in tokens) {
     let token = tokens[address];
     let div = document.createElement("div");
-    div.setAttribute("data-address", "address");
+    div.setAttribute("data-address", address);
     div.classList.add("token-row");
     let html = `
-      <img class="token-list-img" src="${token.logoURI}">
-      <span class="token-list-text>${token.symbol}</span>
+      <img class="token-list-img" src="${token.logoURI}" />
+      <span class="token-list-text">${token.symbol}</span>
     `;
     div.innerHTML = html;
-    div.onclick = selectToken();
+    div.onclick = (e) => selectToken(e);
     parent.appendChild(div);
   }
 }
 
-async function selectToken() {
+async function selectToken(e) {
   closeModal();
-  let address = event.target.getAttribute("data-address");
-  console.log(address);
+  let address = e.target.getAttribute("data-address");
+  currentTrade[currentSelectSide] = tokens[address];
 }
 
 async function login() {
@@ -47,7 +49,8 @@ async function login() {
   }
 }
 
-const openModal = () => {
+const openModal = (side) => {
+  currentSelectSide = side;
   document.getElementById("token-modal").style.display = "initial";
 };
 
@@ -57,7 +60,7 @@ const closeModal = () => {
 
 init();
 
-document.getElementById("from-token-select").onclick = openModal;
+document.getElementById("from-token-select").onclick = () => openModal("from");
 document.getElementById("modal-close").onclick = closeModal;
 
 document.getElementById("login_button").onclick = login;
