@@ -9,6 +9,9 @@ async function init() {
   await Moralis.initPlugins();
   await Moralis.enableWeb3();
   await listAvailableTokens();
+  if (currentUser) {
+    document.getElementById("swap-button").disabled = false;
+  }
 }
 
 async function listAvailableTokens() {
@@ -69,6 +72,7 @@ async function login() {
     if (!currentUser) {
       currentUser = await Moralis.Web3.authenticate();
     }
+    document.getElementById("swap-button").disabled = false;
   } catch (error) {
     console.log(error);
   }
@@ -102,9 +106,51 @@ async function getQuote() {
     toTokenAddress: currentTrade.to.address,
     amount: amount,
   });
-
   document.getElementById("to-amount").value =
     quote.toTokenAmount / 10 ** quote.toToken.decimals;
+  if (quote.estimatedGas) {
+    const estimatedGas = `<div id="gas-estimate-container">Estimated Gas: <span id="gas-estimate"></span></div>`;
+    document
+      .getElementById("swap-button")
+      .insertAdjacentHTML("beforebegin", estimatedGas);
+    document.getElementById("gas-estimate").innerHTML = quote.estimatedGas;
+  }
+}
+
+async function trySwap() {
+  let address = Moralis.User.current().get("ethAddress");
+  if (currentTrade.from.symbol !== "ETH") {
+    const amount = Number(
+      document.getElementById("from-amount").value *
+        10 ** currentTrade.from.decimals
+    );
+    const allowance = await Moralis.Plugins.oneInch.hasAllowance({
+      chain: "eth",
+      fromTokenAddress: currentTrade.from.address,
+      fromAddress: address,
+      amount: amount,
+    });
+    if (!allowance) {
+      await Moralis.Plugins.oneInch.approve({
+        chain: "eth",
+        tokenAddress: currentTrade.from.address,
+        fromAddress: address,
+      });
+    }
+  }
+  const receipt = await doSwap(address, amount);
+  alert(receipt);
+}
+
+async function swap(userAddress, amount) {
+  return await Moralis.Plugins.oneInch.swap({
+    chain: "eth",
+    fromTokenAddress: currentTrade.from.address,
+    toTokenAddress: currentTrade.to.address,
+    amount: amount,
+    fromAddress: userAddress,
+    slippage: 1,
+  });
 }
 
 init();
@@ -114,3 +160,4 @@ document.getElementById("to-token-select").onclick = () => openModal("to");
 document.getElementById("modal-close").onclick = closeModal;
 document.getElementById("login-button").onclick = login;
 document.getElementById("from-amount").onblur = getQuote;
+document.getElementById("swap-button").onclick = trySwap;
