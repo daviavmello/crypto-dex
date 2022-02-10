@@ -34,10 +34,9 @@ async function listAvailableTokens() {
 
 function selectToken(address) {
   closeModal();
-  console.log(address);
-  // let address = e.target.getAttribute("data-address");
   currentTrade[currentSelectSide] = tokens[address];
   renderInterface();
+  getQuote();
 }
 
 function renderInterface() {
@@ -84,9 +83,34 @@ const closeModal = () => {
   document.getElementById("token-modal").style.display = "none";
 };
 
+async function getQuote() {
+  if (
+    !currentTrade.from ||
+    !currentTrade.to ||
+    !document.getElementById("from-amount").value
+  ) {
+    return;
+  }
+
+  const amount = Number(
+    document.getElementById("from-amount").value *
+      10 ** currentTrade.from.decimals
+  );
+  const quote = await Moralis.Plugins.oneInch.quote({
+    chain: "eth",
+    fromTokenAddress: currentTrade.from.address,
+    toTokenAddress: currentTrade.to.address,
+    amount: amount,
+  });
+
+  document.getElementById("to-amount").value =
+    quote.toTokenAmount / 10 ** quote.toToken.decimals;
+}
+
 init();
 
 document.getElementById("from-token-select").onclick = () => openModal("from");
 document.getElementById("to-token-select").onclick = () => openModal("to");
 document.getElementById("modal-close").onclick = closeModal;
-document.getElementById("login_button").onclick = login;
+document.getElementById("login-button").onclick = login;
+document.getElementById("from-amount").onblur = getQuote;
