@@ -13,30 +13,23 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light">
+    <div class="bg">
+    <nav class="navbar navbar-expand-lg">
         <a class="navbar-brand" href="#">DEX</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-            </ul>
-            <button id="login-button" class="btn btn-outline-primary my-2 my-sm-0" type="submit">Sign in with
-                Metamask</button>
-        </div>
+        <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        </div> -->
     </nav>
-    <div class="container d-flex justify-content-center align-items-center" id="content">
-        <div class="col col-md-6" id="window">
+    <div class="container d-flex flex-column justify-content-center align-items-center" id="content"> <div class="col col-md-6" id="window">
             <h4>Swap</h4>
             <div id="form">
                 <div class="swapbox py-4">
                     <div class="swapbox-select" id="from-token-select">
-                        <div id="from-token-placeholder">Token Select <i class="bi bi-chevron-down"></i></div>
+                        <div id="from-token-placeholder">Token Select</div>
                         <div id="from-token-container">
                             <img class="token-image" id="from-token-img" />
                             <span id="from-token-text"></span>
@@ -48,7 +41,7 @@
                 </div>
                 <div class="swapbox py-4">
                     <div class="swapbox-select" id="to-token-select">
-                        <div id="to-token-placeholder">Token Select <i class="bi bi-chevron-down"></i></div>
+                        <div id="to-token-placeholder">Token Select</div>
                         <div id="to-token-container">
                             <img class="token-image" id="to-token-img" />
                             <span id="to-token-text"></span>
@@ -59,7 +52,7 @@
                     </div>
                 </div>
                 <button disabled class="btn btn-large btn-primary btn-block" id="swap-button">Swap</button>
-            </div>
+            </div>    
 
             <!-- Modal -->
             <div class="modal" id="token-modal" tabindex="-1" role="dialog">
@@ -80,9 +73,11 @@
                     </div>
                 </div>
             </div>
+            <button id="login-button" class="btn btn-outline-primary w-100 mt-4" type="submit">Sign in with Metamask</button>
         </div>
     </div>
 
+    </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
@@ -92,5 +87,4 @@
         crossorigin="anonymous"></script>
     <script type="text/javascript" src="./main.js"></script>
 </body>
-
 </html>
